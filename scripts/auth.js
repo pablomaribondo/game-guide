@@ -1,3 +1,8 @@
+auth.onAuthStateChanged((user) => {
+  console.log(user);
+});
+
+
 const signupForm = document.getElementById('signup-form');
 signupForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -43,4 +48,4 @@ loginForm.addEventListener('submit', async (event) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
