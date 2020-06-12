@@ -6,12 +6,23 @@ signupForm.addEventListener('submit', async (event) => {
   const password = signupForm['signup-password'].value;
 
   try {
-    const credentials = await auth.createUserWithEmailAndPassword(email, password);
-    
+    await auth.createUserWithEmailAndPassword(email, password);
+
     const modal = document.getElementById('modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
   } catch (error) {
     console.log(error);
+  }
+});
+
+const logout = document.getElementById('logout');
+logout.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.log(error)
   }
 })
