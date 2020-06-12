@@ -23,6 +23,24 @@ logout.addEventListener('click', async (event) => {
   try {
     await auth.signOut();
   } catch (error) {
-    console.log(error)
+    console.log(error);
+  }
+});
+
+const loginForm = document.getElementById('login-form');
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const email = loginForm['login-email'].value;
+  const password = loginForm['login-password'].value;
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+
+    const modal = document.getElementById('modal-login');
+    M.Modal.getInstance(modal).close();
+    loginForm.reset();
+  } catch (error) {
+    console.log(error);
   }
 })
