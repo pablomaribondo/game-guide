@@ -1,15 +1,19 @@
 (async () => {
-  try {
-    const guidesSnapshot = await db.collection("guides").get();
-    setupGuides(guidesSnapshot.docs);
-  } catch (error) {
-    console.log(error);
-  }
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      try {
+        const guidesSnapshot = await db.collection("guides").get();
+        setupGuides(guidesSnapshot.docs);
+        setupUI(user);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setupUI();
+      setupGuides([]);
+    }
+  });
 })();
-
-auth.onAuthStateChanged((user) => {
-  console.log(user);
-});
 
 const signupForm = document.getElementById("signup-form");
 signupForm.addEventListener("submit", async (event) => {
