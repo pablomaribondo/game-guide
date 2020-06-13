@@ -7,12 +7,12 @@ const setupUI = async (user) => {
   if (user) {
     try {
       const userDoc = await db.collection("users").doc(user.uid).get();
-  
+
       const html = `
         <div>Logged in as ${user.email}</div>
         <div>${userDoc.data().bio}</div>
       `;
-  
+
       accountDetails.innerHTML = html;
     } catch (error) {
       console.log(error.message);

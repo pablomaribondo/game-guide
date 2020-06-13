@@ -16,6 +16,21 @@
   });
 })();
 
+const adminForm = document.querySelector(".admin-actions");
+adminForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("admin-email").value;
+
+  try {
+    const addAdminRole = functions.httpsCallable("addAdminRole");
+    const result = await addAdminRole({ email });
+    console.log(result);
+  } catch (error) {
+    console.log(erro.message);
+  }
+});
+
 const createForm = document.getElementById("create-form");
 createForm.addEventListener("submit", async (event) => {
   event.preventDefault();
