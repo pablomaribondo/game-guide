@@ -2,9 +2,10 @@
   auth.onAuthStateChanged(async (user) => {
     if (user) {
       try {
-        const guidesSnapshot = await db.collection("guides").get();
-        setupGuides(guidesSnapshot.docs);
-        setupUI(user);
+        await db.collection("guides").onSnapshot((snapshot) => {
+          setupGuides(snapshot.docs);
+          setupUI(user);
+        });
       } catch (error) {
         console.log(error.message);
       }
