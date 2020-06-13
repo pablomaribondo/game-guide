@@ -9,6 +9,6 @@
 
 * [Firebase Auth Tutorial - The Net Ninja](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jUPIes_B8vRjn1_GaplOPQ)
 
-<!-- ## Screenshot -->
+## Screenshot
 
-<!-- ![alt text](screenshot.png) -->
+![alt text](screenshot.png)

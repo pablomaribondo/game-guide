@@ -76,7 +76,9 @@ signupForm.addEventListener("submit", async (event) => {
     const modal = document.getElementById("modal-signup");
     M.Modal.getInstance(modal).close();
     signupForm.reset();
+    signupForm.querySelector(".error").innerHTML = "";
   } catch (error) {
+    signupForm.querySelector(".error").innerHTML = error.message;
     console.log(error.message);
   }
 });
@@ -105,7 +107,9 @@ loginForm.addEventListener("submit", async (event) => {
     const modal = document.getElementById("modal-login");
     M.Modal.getInstance(modal).close();
     loginForm.reset();
+    loginForm.querySelector(".error").innerHTML = "";
   } catch (error) {
+    loginForm.querySelector(".error").innerHTML = error.message;
     console.log(error.message);
   }
 });

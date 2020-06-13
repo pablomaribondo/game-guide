@@ -5,6 +5,12 @@ admin.initializeApp();
 
 exports.addAdminRole = functions.https.onCall(async (data, context) => {
   try {
+    if (!context.auth.token.admin) {
+      return {
+        error: "Only admins can add other admins!"
+      }
+    }
+
     const { email } = data;
     const user = await admin.auth().getUserByEmail(email);
     await admin.auth().setCustomUserClaims(user.uid, { admin: true });
@@ -14,7 +20,7 @@ exports.addAdminRole = functions.https.onCall(async (data, context) => {
     };
   } catch (error) {
     return {
-      message: error.message,
+      error: error.message,
     };
   }
 });
