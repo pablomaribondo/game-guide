@@ -2,16 +2,16 @@
   auth.onAuthStateChanged(async (user) => {
     if (user) {
       try {
-        await db.collection("guides").onSnapshot((snapshot) => {
+        await db.collection("guides").onSnapshot(async (snapshot) => {
           setupGuides(snapshot.docs);
-          setupUI(user);
+          await setupUI(user);
         });
       } catch (error) {
         console.log(error.message);
       }
     } else {
       setupUI();
-      setupGuides([]);
+      await setupGuides([]);
     }
   });
 })();
@@ -43,9 +43,17 @@ signupForm.addEventListener("submit", async (event) => {
 
   const email = signupForm["signup-email"].value;
   const password = signupForm["signup-password"].value;
+  const bio = signupForm["signup-bio"].value;
 
   try {
-    await auth.createUserWithEmailAndPassword(email, password);
+    const credentials = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+
+    await db.collection("users").doc(credentials.user.uid).set({
+      bio,
+    });
 
     const modal = document.getElementById("modal-signup");
     M.Modal.getInstance(modal).close();

@@ -3,12 +3,20 @@ const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 const accountDetails = document.querySelector(".account-details");
 
-const setupUI = (user) => {
+const setupUI = async (user) => {
   if (user) {
-    const html = `
-      <div>Logged in as ${user.email}</div>
-    `;
-    accountDetails.innerHTML = html;
+    try {
+      const userDoc = await db.collection("users").doc(user.uid).get();
+  
+      const html = `
+        <div>Logged in as ${user.email}</div>
+        <div>${userDoc.data().bio}</div>
+      `;
+  
+      accountDetails.innerHTML = html;
+    } catch (error) {
+      console.log(error.message);
+    }
 
     loggedInLinks.forEach((item) => (item.style.display = "block"));
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
