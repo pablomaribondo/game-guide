@@ -2,6 +2,7 @@ const guideList = document.querySelector(".guides");
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 const accountDetails = document.querySelector(".account-details");
+const adminItems = document.querySelectorAll(".admin");
 
 const setupUI = async (user) => {
   if (user) {
@@ -11,6 +12,7 @@ const setupUI = async (user) => {
       const html = `
         <div>Logged in as ${user.email}</div>
         <div>${userDoc.data().bio}</div>
+        <div class="pink-text">${user.admin ? "Admin" : ""}</div>
       `;
 
       accountDetails.innerHTML = html;
@@ -18,11 +20,16 @@ const setupUI = async (user) => {
       console.log(error.message);
     }
 
+    if (user.admin) {
+      adminItems.forEach((item) => (item.style.display = "block"));
+    }
+
     loggedInLinks.forEach((item) => (item.style.display = "block"));
     loggedOutLinks.forEach((item) => (item.style.display = "none"));
   } else {
     accountDetails.innerHTML = "";
 
+    adminItems.forEach((item) => (item.style.display = "none"));
     loggedInLinks.forEach((item) => (item.style.display = "none"));
     loggedOutLinks.forEach((item) => (item.style.display = "block"));
   }

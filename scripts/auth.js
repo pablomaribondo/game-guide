@@ -2,9 +2,12 @@
   auth.onAuthStateChanged(async (user) => {
     if (user) {
       try {
+        const idTokenResult = await user.getIdTokenResult();
+        user.admin = idTokenResult.claims.admin;
+        await setupUI(user);
+
         await db.collection("guides").onSnapshot(async (snapshot) => {
           setupGuides(snapshot.docs);
-          await setupUI(user);
         });
       } catch (error) {
         console.log(error.message);
