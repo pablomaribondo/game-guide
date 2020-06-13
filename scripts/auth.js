@@ -6,7 +6,7 @@
         setupGuides(guidesSnapshot.docs);
         setupUI(user);
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     } else {
       setupUI();
@@ -14,6 +14,27 @@
     }
   });
 })();
+
+const createForm = document.getElementById("create-form");
+createForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const title = createForm["title"].value;
+  const content = createForm["content"].value;
+
+  try {
+    await db.collection("guides").add({
+      title,
+      content,
+    });
+
+    const modal = document.getElementById("modal-create");
+    M.Modal.getInstance(modal).close();
+    createForm.reset();
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 
 const signupForm = document.getElementById("signup-form");
 signupForm.addEventListener("submit", async (event) => {
@@ -29,7 +50,7 @@ signupForm.addEventListener("submit", async (event) => {
     M.Modal.getInstance(modal).close();
     signupForm.reset();
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
 
@@ -40,7 +61,7 @@ logout.addEventListener("click", async (event) => {
   try {
     await auth.signOut();
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
 
@@ -58,6 +79,6 @@ loginForm.addEventListener("submit", async (event) => {
     M.Modal.getInstance(modal).close();
     loginForm.reset();
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
